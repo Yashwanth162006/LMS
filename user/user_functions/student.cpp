@@ -1,17 +1,14 @@
 #include "../user_classes/student.h"
+#include "../user_classes/user.h"
 #include "../../account/account.h"
 #include <iostream>
 using namespace std;
 
-//member functions
-bool Student::login(string userName,string password){
-    if(password == this->password){
-        acc = new Account(userName);
-        return true;
-    }else{
-        return false;
-    }
+//constructor
+Student::Student(string name,string phoneNumber,string userName,string password,string role,string isLoggedIn)
+    :User(name,phoneNumber,userName,password,role,isLoggedIn){
 }
+//member functions
 bool Student::borrowBook(string bookId){
     return acc->addBook(bookId);
 }

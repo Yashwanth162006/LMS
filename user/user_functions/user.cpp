@@ -1,14 +1,16 @@
 #include "../user_classes/user.h"
+#include "../../account/account.h"
 #include <iostream>
 using namespace std;
 
 //constructor
-User::User(string name,string phoneNumber,string userName,string password,string role){
+User::User(string name,string phoneNumber,string userName,string password,string role,string isLoggedIn){
     this->name = name;
     this->phoneNumber = phoneNumber;
     this->userName = userName;
     this->password = password;
     this->role = role;
+    this->isLoggedIn = isLoggedIn;
 }
 //getters and setters
 void User::setName(string name) {
@@ -41,10 +43,25 @@ void User::setRole(string role){
 string User::getRole(){
     return role;
 }
+void User::setIsLoggedIn(string isLoggedIn){
+    this->isLoggedIn = isLoggedIn;
+}
+string User::getIsLoggedIn(){
+    return isLoggedIn;
+}
 //member functions
 void User::displayDetails(){
     cout<<"Username: "<<userName<<endl;
     cout<<"Name: "<<name<<endl;
     cout<<"Role: "<<role<<endl;
     cout<<"Phone Number: "<<phoneNumber<<endl;
+}
+bool User::login(string userName,string password){
+    if(password == this->password){
+        isLoggedIn="Yes";
+        acc = new Account(userName);
+        return true;
+    }else{
+        return false;
+    }
 }

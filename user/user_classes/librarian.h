@@ -6,10 +6,10 @@
 using namespace std;
 
 class Librarian: public User {
-private:
-    Account* acc;
 public:
-    bool login(string userName,string password);
+    //constructor
+    Librarian (string name,string phoneNumber,string userName,string password,string role,string isLoggedIn);
+    //member functions
     bool addUser(string name,string phoneNumber,string userName,string password,string role);
     bool deleteUser(string userName);
     bool addBook();

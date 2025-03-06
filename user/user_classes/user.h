@@ -1,15 +1,17 @@
 #ifndef _USER_H_
 #define _USER_H_
 #include <iostream>
+#include "../../account/account.h"
 using namespace std;
 
 class User{
 protected:
     //attributes
-    string name,phoneNumber,userName,password,role;
+    string name,phoneNumber,userName,password,role,isLoggedIn;
+    Account* acc;
 public:
     //constructor
-    User (string name,string phoneNumber,string userName,string password,string role);
+    User (string name,string phoneNumber,string userName,string password,string role,string isLoggedIn);
     //getters and setters
     void setName(string name);
     string getName();
@@ -21,8 +23,11 @@ public:
     string getPassword ();
     void setRole(string role);
     string getRole();
+    void setIsLoggedIn(string isLoggedIn);
+    string getIsLoggedIn();
     //member functions
     void displayDetails();
+    bool login(string userName,string password);
 };
 
 #endif

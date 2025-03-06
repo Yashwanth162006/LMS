@@ -11,8 +11,8 @@ void Book::getDetails(){
 
 }
 bool Book::updateStatus(string newStatus){
-
+    return true;
 }
 bool Book::checkAvailability(){
-    
+    return true;
 }

@@ -10,9 +10,9 @@ private:
     const static int borrowPeriod = 15;
     const static int booksLimit = 3;
     const static int fineRate = 10;
-    Account* acc;
 public:
-    bool login(string userName,string password);
+    //constructor
+    Student (string name,string phoneNumber,string userName,string password,string role,string isLoggedIn);
     bool borrowBook(string bookId);
     bool returnBook(string bookId);
     void checkFineDetails();

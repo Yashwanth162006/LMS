@@ -10,9 +10,9 @@ private:
     const static int borrowPeriod = 30;
     const static int overDuePeriod = 60;
     const static int booksLimit = 5;
-    Account* acc;
 public:
-    bool login(string userName,string password);
+    //constructor
+    Faculty (string name,string phoneNumber,string userName,string password,string role,string isLoggedIn);
     bool borrowBook(string bookId);
     bool returnBook(string bookId);
     void viewBrrowingHistory();
