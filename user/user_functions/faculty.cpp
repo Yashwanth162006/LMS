@@ -16,6 +16,9 @@ bool Faculty::borrowBook(string bookId){
 bool Faculty::returnBook(string bookId){
     return acc->removeBook(bookId);
 }
- void Faculty::viewBrrowingHistory(){
+void Faculty::viewTransactionHistory(){
      acc->viewHistory();
+}
+void Faculty::viewCurrentBorrows(){
+    acc->viewCurrBorrows();
 }

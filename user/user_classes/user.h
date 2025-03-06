@@ -28,6 +28,12 @@ public:
     //member functions
     void displayDetails();
     bool login(string userName,string password);
+    virtual bool borrowBook(string bookId)=0;
+    virtual bool returnBook(string bookId)=0;
+    virtual void viewTransactionHistory()=0;
+    virtual void viewCurrentBorrows()=0;
+    virtual void checkFineDetails(){};
+    virtual void payFine(){};
 };
 
 #endif

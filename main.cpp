@@ -26,13 +26,19 @@ int main(){
             cout<<"User Not Found"<<endl;
         }else{
             if(user->getIsLoggedIn()=="No"){
-                cout<<"You are not logged In"<<endl;
                 authenticate(user,userIn);
                 if(user->getIsLoggedIn()=="No") break;
                 cout<<"Hello "<<user->getName()<<endl;
             }
+            int op;
             if(user->getRole()=="Student"){
-                
+                displayStudentPrompts();
+                while(1){
+                    cout<<"Enter Option: ";
+                    cin>>op;
+                    if(op==0) break;
+                    processStudentRequest(user,op);
+                }
             }else if(user->getRole()=="Faculty"){
                 
             }else if(user->getRole()=="Librarian"){

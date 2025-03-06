@@ -20,3 +20,20 @@ bool Librarian::addBook(){
 bool Librarian::deleteBook(){
     return true;
 }
+void Librarian::viewHistory(){
+
+}
+bool Librarian::borrowBook(string bookId){
+    //Not available for librarian
+    return false;
+}
+bool Librarian::returnBook(string bookId){
+    //Not available for librarian
+    return false;
+}
+void Librarian::viewTransactionHistory(){
+    //Not available for librarian
+}
+void Librarian::viewCurrentBorrows(){
+    //Not available for librarian
+}

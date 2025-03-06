@@ -59,7 +59,7 @@ void User::displayDetails(){
 bool User::login(string userName,string password){
     if(password == this->password){
         isLoggedIn="Yes";
-        acc = new Account(userName);
+        acc = new Account(userName,role);
         return true;
     }else{
         return false;

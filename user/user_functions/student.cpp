@@ -21,6 +21,9 @@ void Student::checkFineDetails(){
 bool Student::payFine(int amount){
     return acc->payFine(amount);
 }
- void Student::viewBrrowingHistory(){
+void Student::viewTransactionHistory(){
      acc->viewHistory();
+}
+void Student::viewCurrentBorrows(){
+    acc->viewCurrBorrows();
 }

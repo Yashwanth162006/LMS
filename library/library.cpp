@@ -8,6 +8,39 @@
 Library::Library(){
 
 }
+//getters and setters
+void Library::setBooks(list<list<string>> books){
+    this->books = books;
+}
+list<list<string>> Library::getBooks(){
+    return books;
+}
+void Library::setUsers(list<list<string>> users){
+    this->users = users;
+}
+list<list<string>> Library::getUsers(){
+    return users;
+}
+void Library::setHistory(list<list<string>> history){
+    this->history = history;
+}
+list<list<string>> Library::getHistory(){
+    return history;
+}
+list<list<string>> Library::getHistory(string userName){
+    list<list<string>> userHistory;
+    for(auto it=history.begin();it!=history.end();it++){
+        auto nameIt = it->begin();
+        if(*(nameIt)==userName){
+            list<string> hist;
+            for(auto innerIt=it->begin();innerIt!=it->end();innerIt++){
+                hist.push_back(*(innerIt));
+            }
+            userHistory.push_back(hist);
+        }
+    }
+    return userHistory;
+}
 //member functions
 bool Library::addUser(string name,string phoneNumber,string userName,string password,string role){
     return true;
@@ -85,15 +118,16 @@ bool Library::loadBooks(){
 bool Library::loadTransactions(){
     ifstream readHistory("./data/transactions.csv");
     if(!readHistory.is_open()) return false;
-    string userName,ISBN,action;
+    string userName,ISBN,action,date;
     string line;
     while(getline(readHistory,line,'\n')){
         list<string> hist;
         stringstream ss(line);
         getline(ss,userName,',');
         getline(ss,ISBN,',');
-        getline(ss,action,'\n');
-        hist.push_back(userName);hist.push_back(ISBN);hist.push_back(action);
+        getline(ss,action,',');
+        getline(ss,date,'\n');
+        hist.push_back(userName);hist.push_back(ISBN);hist.push_back(action);hist.push_back(date);
         history.push_back(hist);
     }
     readHistory.close();

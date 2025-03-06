@@ -6,18 +6,20 @@
 using namespace std;
 
 class Student:public User {
-private:
+public:
     const static int borrowPeriod = 15;
     const static int booksLimit = 3;
     const static int fineRate = 10;
 public:
     //constructor
     Student (string name,string phoneNumber,string userName,string password,string role,string isLoggedIn);
-    bool borrowBook(string bookId);
-    bool returnBook(string bookId);
-    void checkFineDetails();
+    //member functions
+    bool borrowBook(string bookId) override;
+    bool returnBook(string bookId) override;
+    void checkFineDetails() override;
     bool payFine(int amount);
-    void viewBrrowingHistory();
+    void viewTransactionHistory() override;
+    void viewCurrentBorrows() override;
 };
 
 #endif

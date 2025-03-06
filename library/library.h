@@ -17,6 +17,14 @@ private:
 public:
     //constructor
     Library();
+    //getters and setters
+    void setBooks(list<list<string>> books);
+    list<list<string>> getBooks();
+    void setUsers(list<list<string>> users);
+    list<list<string>> getUsers();
+    void setHistory(list<list<string>> history);
+    list<list<string>> getHistory();
+    list<list<string>> getHistory(string userName);
     //member functions
     //users
     bool addUser(string name,string phoneNumber,string userName,string password,string role);

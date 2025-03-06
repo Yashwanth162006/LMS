@@ -6,20 +6,23 @@ using namespace std;
 
 class Account {
 private:
-    string accountId;
+    string userName;
     string role;
-    list<string> currBorrows;
-    list<string> borrowingHistory;
+    list<pair<string,long long>> currBorrows;
+    list<list<string>> transactionHistory;
     int totalFine;
 public:
     //constructor
-    Account(string userName);
+    Account(string userName,string role);
+    //setters and getters
+    list<pair<string,long long>> getCurrBorrows();
     //member functions
     bool addBook(string bookId);
     bool removeBook(string bookId);
     void checkFine();
     bool payFine(int amount);
     void viewHistory();
+    void viewCurrBorrows();
 };
 
 #endif

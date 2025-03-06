@@ -13,9 +13,10 @@ private:
 public:
     //constructor
     Faculty (string name,string phoneNumber,string userName,string password,string role,string isLoggedIn);
-    bool borrowBook(string bookId);
-    bool returnBook(string bookId);
-    void viewBrrowingHistory();
+    bool borrowBook(string bookId) override;
+    bool returnBook(string bookId) override;
+    void viewTransactionHistory() override;
+    void viewCurrentBorrows() override;
 };
 
 #endif

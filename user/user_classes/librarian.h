@@ -14,6 +14,11 @@ public:
     bool deleteUser(string userName);
     bool addBook();
     bool deleteBook();
+    void viewHistory();
+    bool borrowBook(string bookId) override;
+    bool returnBook(string bookId) override;
+    void viewTransactionHistory() override;
+    void viewCurrentBorrows() override;
 };
 
 #endif
