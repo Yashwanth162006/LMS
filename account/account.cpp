@@ -61,6 +61,7 @@ Account::Account(string userName,string role){
     //role
     this->role = role;
     Library lib1;
+    lib1.loadUsers();
     //transaction history
     bool isHistoryLoaded = lib1.loadTransactions();
     if(isHistoryLoaded) transactionHistory = lib1.getHistory(userName);
@@ -68,7 +69,7 @@ Account::Account(string userName,string role){
     currBorrows = filterHistory(transactionHistory,userName);
     //total fine
     if(role=="Faculty" || role=="Librarian") totalFine=0;
-    else totalFine = calculateFine(currBorrows);
+    else totalFine = calculateFine(currBorrows)+lib1.getFine(userName);
 }
 //getters and setters
 list<pair<string,long long>> Account::getCurrBorrows(){
@@ -85,7 +86,12 @@ void Account::checkFine(){
     cout<<"Your Total Fine is: "<<totalFine<<endl;
 }
 bool Account::payFine(int amount){
-    return true;
+    if(amount>=totalFine){
+        return false;
+    }else{
+        totalFine -= amount;
+        return true;
+    }
 }
 void Account::viewHistory(){
     for(auto it=transactionHistory.begin();it!=transactionHistory.end();it++){

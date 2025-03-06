@@ -26,9 +26,12 @@ int main(){
             cout<<"User Not Found"<<endl;
         }else{
             if(user->getIsLoggedIn()=="No"){
+                cout<<"Enter Password: ";
                 authenticate(user,userIn);
                 if(user->getIsLoggedIn()=="No") break;
+                cout<<endl;
                 cout<<"Hello "<<user->getName()<<endl;
+                cout<<endl;
             }
             int op;
             if(user->getRole()=="Student"){

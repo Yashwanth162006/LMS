@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <list>
+#include <string>
 
 //constructor
 Library::Library(){
@@ -78,7 +79,7 @@ User* Library::identifyUser(string userName){
 bool Library::loadUsers(){
     ifstream readUsers("./data/users.csv");
     if(!readUsers.is_open()) return false;
-    string name,phoneNumber,userName,password,role,isLoggedIn;
+    string name,phoneNumber,userName,password,role,isLoggedIn,fine;
     string line;
     while(getline(readUsers,line,'\n')){
         list<string> user;
@@ -88,9 +89,10 @@ bool Library::loadUsers(){
         getline(ss,userName,',');
         getline(ss,password,',');
         getline(ss,role,',');
-        getline(ss,isLoggedIn,'\n');
+        getline(ss,isLoggedIn,',');
+        getline(ss,fine,'\n');
         user.push_back(name);user.push_back(phoneNumber);user.push_back(userName);
-        user.push_back(password);user.push_back(role);user.push_back(isLoggedIn);
+        user.push_back(password);user.push_back(role);user.push_back(isLoggedIn);user.push_back(fine);
         users.push_back(user);
     }
     readUsers.close();
@@ -156,4 +158,42 @@ void Library::displayHistory(){
         }
         cout<<endl;
     }
+}
+bool Library::updateBookStatus(string bookId,string newStatus){
+    for(auto it=books.begin();it!=books.end();it++){
+        auto isbnIt = it->begin();
+        isbnIt++,isbnIt++,isbnIt++;
+        if(*isbnIt == bookId){
+            isbnIt++;
+            *isbnIt = newStatus;
+            return true;
+        }
+    }
+    return false;
+}
+int Library::getFine(string userName){
+    for(auto it=users.begin();it!=users.end();it++){
+        auto innerIt = it->begin();
+        innerIt++;innerIt++;
+        if(*innerIt == userName){
+            innerIt = it->end();
+            innerIt--;
+            return stoi(*innerIt); 
+        }
+    }
+    return 0;
+}
+bool Library::updateFine(string userName,int newAmount){
+    for(auto it=users.begin();it!=users.end();it++){
+        auto innerIt = it->begin();
+        innerIt++;innerIt++;
+        if(*innerIt == userName){
+            innerIt = it->end();
+            innerIt--;
+            *innerIt = to_string(stoi(*innerIt)-newAmount);
+            //*****update user.csv file*****//
+            return true; 
+        }
+    }
+    return false;
 }

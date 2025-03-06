@@ -39,15 +39,18 @@ void authenticate(User* user,string& userIn){
     }
 }
 void displayStudentPrompts(){
+    cout<<endl;
     cout<<"What do you want to do ?"<<endl;
-    cout<<"To borrow a book enter 1"<<endl;
-    cout<<"To return a book enter 2"<<endl;
-    cout<<"To view fine enter 3"<<endl;
-    cout<<"To pay fine enter 4"<<endl;
-    cout<<"To view history enter 5"<<endl;
-    cout<<"To view current borrows enter 6"<<endl;
-    cout<<"To view your profile enter 7"<<endl;
-    cout<<"Enter 0 to exit"<<endl;
+    cout<<endl;
+    cout<<"1) To borrow a book enter 1"<<endl;
+    cout<<"2) To return a book enter 2"<<endl;
+    cout<<"3) To view fine enter 3"<<endl;
+    cout<<"4) To pay fine enter 4"<<endl;
+    cout<<"5) To view history enter 5"<<endl;
+    cout<<"6) To view current borrows enter 6"<<endl;
+    cout<<"7) To view your profile enter 7"<<endl;
+    cout<<"8) Enter 0 to exit"<<endl;
+    cout<<endl;
 }
 void processStudentRequest(User* user,int op){
     if(op==1){
@@ -55,11 +58,20 @@ void processStudentRequest(User* user,int op){
         cout<<"Enter ISBN number: ";
         cin>>bookId;
         bool borrowResult = user->borrowBook(bookId);
+    }else if(op==2){
+        string bookId;
+        cout<<"Enter ISBN number: ";
+        cin>>bookId;
+        bool returnResult = user->returnBook(bookId);
     }else if(op==3){
         user->checkFineDetails();
     }else if(op==4){
-        int amount;
-        
+        int amount=0;
+        user->checkFineDetails();
+        cout<<"Enter valid amount: ";cin>>amount;
+        if(user->payFine(amount)) cout<<"Payment Successful"<<endl;
+        else cout<<"Entered amount is more that your total fine try again"<<endl;
+        user->checkFineDetails();
     }
     else if(op==5){
         user->viewTransactionHistory();
@@ -70,13 +82,16 @@ void processStudentRequest(User* user,int op){
     }
 }
 void displayFacultyPrompts(){
+    cout<<endl;
     cout<<"What do you want to do ?"<<endl;
-    cout<<"To borrow a book enter 1"<<endl;
-    cout<<"To return a book enter 2"<<endl;
-    cout<<"To view history enter 3"<<endl;
-    cout<<"To view current borrows enter 4"<<endl;
-    cout<<"To view your profile enter 5"<<endl;
-    cout<<"Enter 0 to exit"<<endl;
+    cout<<endl;
+    cout<<"1) To borrow a book enter 1"<<endl;
+    cout<<"2) To return a book enter 2"<<endl;
+    cout<<"3) To view history enter 3"<<endl;
+    cout<<"4) To view current borrows enter 4"<<endl;
+    cout<<"5) To view your profile enter 5"<<endl;
+    cout<<"6) Enter 0 to exit"<<endl;
+    cout<<endl;
 }
 void processFacultyRequest(User* user,int op){
     if(op==1){
@@ -84,6 +99,11 @@ void processFacultyRequest(User* user,int op){
         cout<<"Enter ISBN number: ";
         cin>>bookId;
         bool borrowResult = user->borrowBook(bookId);
+    }else if(op==2){
+        string bookId;
+        cout<<"Enter ISBN number: ";
+        cin>>bookId;
+        bool returnResult = user->returnBook(bookId);
     }else if(op==3){
         user->viewTransactionHistory();
     }else if(op==4){
@@ -93,26 +113,18 @@ void processFacultyRequest(User* user,int op){
     }
 }
 void displayLibrarianPrompts(){
+    cout<<endl;
     cout<<"What do you want to do ?"<<endl;
-    cout<<"To add a user enter 1"<<endl;
-    cout<<"To delete a user enter 2"<<endl;
-    cout<<"To add a book enter 3"<<endl;
-    cout<<"To delete a book enter 4"<<endl;
-    cout<<"To view history enter 5"<<endl;
-    cout<<"To view your profile enter 6"<<endl;
-    cout<<"Enter 0 to exit"<<endl;
+    cout<<endl;
+    cout<<"1) To add a user enter 1"<<endl;
+    cout<<"2) To delete a user enter 2"<<endl;
+    cout<<"3) To add a book enter 3"<<endl;
+    cout<<"4) To delete a book enter 4"<<endl;
+    cout<<"5) To view history enter 5"<<endl;
+    cout<<"6) To view your profile enter 6"<<endl;
+    cout<<"7) Enter 0 to exit"<<endl;
+    cout<<endl;
 }
 void processLibrarianRequest(User* user,int op){
-    if(op==1){
-        string bookId;
-        cout<<"Enter ISBN number: ";
-        cin>>bookId;
-        bool borrowResult = user->borrowBook(bookId);
-    }else if(op==3){
-        user->viewTransactionHistory();
-    }else if(op==4){
-        user->viewCurrentBorrows();
-    }else if(op==5){
-        user->displayDetails();
-    }
+    
 }

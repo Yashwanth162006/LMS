@@ -31,11 +31,14 @@ public:
     bool deleteUser(string userName);
     bool loadUsers();
     void displayUsers();
+    int getFine(string userName);
+    bool updateFine(string userName,int newFine);
     User* identifyUser(string userName);
     //books
     bool addBook();
     bool deleteBook();
     bool loadBooks();
+    bool updateBookStatus(string bookId,string newStatus);
     void displayBooks();
     //history
     bool addTransaction();

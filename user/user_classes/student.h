@@ -17,7 +17,7 @@ public:
     bool borrowBook(string bookId) override;
     bool returnBook(string bookId) override;
     void checkFineDetails() override;
-    bool payFine(int amount);
+    bool payFine(int amount) override;
     void viewTransactionHistory() override;
     void viewCurrentBorrows() override;
 };

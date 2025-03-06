@@ -33,7 +33,7 @@ public:
     virtual void viewTransactionHistory()=0;
     virtual void viewCurrentBorrows()=0;
     virtual void checkFineDetails(){};
-    virtual void payFine(){};
+    virtual bool payFine(int amount){return true;};
 };
 
 #endif

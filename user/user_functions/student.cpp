@@ -22,7 +22,7 @@ bool Student::payFine(int amount){
     return acc->payFine(amount);
 }
 void Student::viewTransactionHistory(){
-     acc->viewHistory();
+    acc->viewHistory();
 }
 void Student::viewCurrentBorrows(){
     acc->viewCurrBorrows();
