@@ -6,6 +6,7 @@
 #include "./user/user_classes/student.h"
 #include "./user/user_classes/faculty.h"
 #include "./user/user_classes/librarian.h"
+#include "./book/book.h"
 #include "helper.h"
 using namespace std;
 
@@ -125,6 +126,108 @@ void displayLibrarianPrompts(){
     cout<<"7) Enter 0 to exit"<<endl;
     cout<<endl;
 }
-void processLibrarianRequest(User* user,int op){
-    
+void processLibrarianRequest(User* user,int op,Library& lib){
+    if(op==1){
+        vector<string> details;
+        vector<string> prompts;
+        prompts.push_back("Enter name: ");prompts.push_back("Enter Phone Number: ");prompts.push_back("Enter username: ");
+        prompts.push_back("Enter password: ");prompts.push_back("Enter role: ");
+        string userIn;
+        for(int i=0;i<5;i++){
+            if(i!=2){
+                cout<<prompts[i];
+                cin>>userIn;
+            }
+            else{
+                User* user1;
+                while(1){
+                    cout<<prompts[2];
+                    cin>>userIn;
+                    user1 = lib.identifyUser(userIn);
+                    if(user1==nullptr) break;
+                    cout<<"Username not available"<<endl;
+                }
+            }
+            details.push_back(userIn);
+        }
+        for(int i=0;i<5;i++){
+            char c=',';
+            if(i==4) c='\n';
+            cout<<details[i]<<c;
+        }
+        cout<<endl;
+        if(user->addUser(details[0],details[1],details[2],details[3],details[4])){
+            cout<<"User added"<<endl;
+        }else{
+            cout<<"Failed to add user"<<endl;
+        }
+    }else if(op==2){
+        string userIn;
+        while(1){
+            cout<<"Enter username: ";
+            cin>>userIn;
+            User* user1 = lib.identifyUser(userIn);
+            if(user1!=nullptr) break;
+            cout<<"User does not exist"<<endl;
+            cout<<endl;
+        }
+        if(user->deleteUser(userIn)){
+            cout<<"User Deleted"<<endl<<endl;
+        }else{
+            cout<<"Failed to delete user"<<endl<<endl;
+        }
+    }else if(op==3){
+        vector<string> details;
+        vector<string> prompts;
+        prompts.push_back("Enter title: ");prompts.push_back("Enter author: ");prompts.push_back("Enter publisher: ");
+        prompts.push_back("Enter ISBN: ");prompts.push_back("Enter status: ");
+        string userIn;
+        for(int i=0;i<5;i++){
+            if(i!=3){
+                cout<<prompts[i];
+                cin>>userIn;
+            }
+            else{
+                Book* book1;
+                while(1){
+                    cout<<prompts[3];
+                    cin>>userIn;
+                    book1 = lib.identifyBook(userIn);
+                    if(book1==nullptr) break;
+                    cout<<"ISBN not available"<<endl;
+                }
+            }
+            details.push_back(userIn);
+        }
+        for(int i=0;i<5;i++){
+            char c=',';
+            if(i==4) c='\n';
+            cout<<details[i]<<c;
+        }
+        cout<<endl;
+        if(user->addBook(details[0],details[1],details[2],details[3],details[4])){
+            cout<<"Book added"<<endl;
+        }else{
+            cout<<"Failed to add book"<<endl;
+        }
+    }else if(op==4){
+        string userIn;
+        while(1){
+            cout<<"Enter ISBN: ";
+            cin>>userIn;
+            Book* book1 = lib.identifyBook(userIn);
+            if(book1!=nullptr) break;
+            cout<<"Book does not exist"<<endl;
+            cout<<endl;
+        }
+        if(user->deleteBook(userIn)){
+            cout<<"Book Deleted"<<endl<<endl;
+        }else{
+            cout<<"Failed to delete book"<<endl<<endl;
+        }
+    }else if(op==5){
+        user->viewHistory();
+    }else if(op==6){
+        user->displayDetails();
+    }
 }

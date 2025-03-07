@@ -19,5 +19,5 @@ void displayFacultyPrompts();
 void displayLibrarianPrompts();
 void processStudentRequest(User* user,int op);
 void processFacultyRequest(User* user,int op);
-void processLibrarianRequest(User* user,int op);
+void processLibrarianRequest(User* user,int op,Library& lib);
 #endif

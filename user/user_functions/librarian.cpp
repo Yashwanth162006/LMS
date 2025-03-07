@@ -1,5 +1,6 @@
 #include "../user_classes/librarian.h"
 #include "../user_classes/user.h"
+#include "../../library/library.h"
 #include <iostream>
 using namespace std;
 
@@ -9,19 +10,29 @@ Librarian::Librarian(string name,string phoneNumber,string userName,string passw
 }
 //member functions
 bool Librarian::addUser(string name,string phoneNumber,string userName,string password,string role){
-    return true;
+    Library lib;
+    lib.loadUsers();
+    return lib.addUser(name,phoneNumber,userName,password,role);
 }
 bool Librarian::deleteUser(string userName){
-    return true;
+    Library lib;
+    lib.loadUsers();
+    return lib.deleteUser(userName);
 }
-bool Librarian::addBook(){
-    return true;
+bool Librarian::addBook(string title,string author,string publisher,string ISBN,string status){
+    Library lib;
+    lib.loadBooks();
+    return lib.addBook(title,author,publisher,ISBN,status);
 }
-bool Librarian::deleteBook(){
-    return true;
+bool Librarian::deleteBook(string ISBN){
+    Library lib;
+    lib.loadBooks();
+    return lib.deleteBook(ISBN);
 }
 void Librarian::viewHistory(){
-
+    Library lib;
+    lib.loadTransactions();
+    return lib.displayHistory();
 }
 bool Librarian::borrowBook(string bookId){
     //Not available for librarian

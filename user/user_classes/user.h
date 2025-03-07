@@ -34,6 +34,11 @@ public:
     virtual void viewCurrentBorrows()=0;
     virtual void checkFineDetails(){};
     virtual bool payFine(int amount){return true;};
+    virtual bool addUser(string name,string phoneNumber,string userName,string password,string role){return true;};
+    virtual bool deleteUser(string userName){return true;};
+    virtual bool addBook(string title,string author,string publisher,string ISBN,string status){return true;};
+    virtual bool deleteBook(string ISBN){return true;};
+    virtual void viewHistory(){};
 };
 
 #endif

@@ -49,10 +49,10 @@ bool Library::addUser(string name,string phoneNumber,string userName,string pass
 bool Library::deleteUser(string userName){
     return true;
 }
-bool Library::addBook(){
+bool Library::addBook(string title,string author,string publisher,string ISBN,string status){
     return true;
 }
-bool Library::deleteBook(){
+bool Library::deleteBook(string ISBN){
     return true;
 }
 bool Library::addTransaction(){
@@ -74,6 +74,20 @@ User* Library::identifyUser(string userName){
     else if(userDetails[4]=="Faculty") return new Faculty(userDetails[0],userDetails[1],userDetails[2],userDetails[3],userDetails[4],userDetails[5]);
     else if(userDetails[4]=="Librarian") return new Librarian(userDetails[0],userDetails[1],userDetails[2],userDetails[3],userDetails[4],userDetails[5]);
     else return nullptr;
+}
+Book* Library::identifyBook(string ISBN){
+    vector<string> bookDetails;
+    for(auto it=books.begin();it!=books.end();it++){
+        auto isbnIt = it->begin();
+        isbnIt++;isbnIt++;isbnIt++;
+        if(*(isbnIt)==ISBN){
+            for(auto innerIt=it->begin();innerIt!=it->end();innerIt++){
+                bookDetails.push_back(*(innerIt));
+            }
+        }
+    }
+    if(bookDetails.size()==0) return nullptr;
+    else return new Book(bookDetails[0],bookDetails[1],bookDetails[2],bookDetails[3],bookDetails[4]);
 }
 //Loading Data
 bool Library::loadUsers(){

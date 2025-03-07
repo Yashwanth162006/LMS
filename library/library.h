@@ -7,6 +7,7 @@
 #include "../user/user_classes/student.h"
 #include "../user/user_classes/faculty.h"
 #include "../user/user_classes/librarian.h"
+#include "../book/book.h"
 using namespace std;
 
 class Library {
@@ -35,11 +36,12 @@ public:
     bool updateFine(string userName,int newFine);
     User* identifyUser(string userName);
     //books
-    bool addBook();
-    bool deleteBook();
+    bool addBook(string title,string author,string publisher,string ISBN,string status);
+    bool deleteBook(string ISBN);
     bool loadBooks();
     bool updateBookStatus(string bookId,string newStatus);
     void displayBooks();
+    Book* identifyBook(string ISBN);
     //history
     bool addTransaction();
     bool loadTransactions();

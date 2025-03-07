@@ -26,7 +26,6 @@ int main(){
             cout<<"User Not Found"<<endl;
         }else{
             if(user->getIsLoggedIn()=="No"){
-                cout<<"Enter Password: ";
                 authenticate(user,userIn);
                 if(user->getIsLoggedIn()=="No") break;
                 cout<<endl;
@@ -43,9 +42,21 @@ int main(){
                     processStudentRequest(user,op);
                 }
             }else if(user->getRole()=="Faculty"){
-                
+                displayFacultyPrompts();
+                while(1){
+                    cout<<"Enter Option: ";
+                    cin>>op;
+                    if(op==0) break;
+                    processFacultyRequest(user,op);
+                }
             }else if(user->getRole()=="Librarian"){
-                
+                displayLibrarianPrompts();
+                while(1){
+                    cout<<"Enter Option: ";
+                    cin>>op;
+                    if(op==0) break;
+                    processLibrarianRequest(user,op,lib);
+                }
             }
         }
     }
