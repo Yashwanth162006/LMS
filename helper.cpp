@@ -32,6 +32,7 @@ void authenticate(User* user,string& userIn){
         cin>>userIn;
         if(user->login(user->getUserName(),userIn)){
             cout<<"Logged In"<<endl;
+            cout<<"-------------------------------"<<endl;
             break;
         }else{
             cout<<"Wrong password"<<endl;
@@ -41,8 +42,11 @@ void authenticate(User* user,string& userIn){
 }
 void displayStudentPrompts(){
     cout<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<"What do you want to do ?"<<endl;
     cout<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<"1) To borrow a book enter 1"<<endl;
     cout<<"2) To return a book enter 2"<<endl;
     cout<<"3) To enquire about a book enter 3"<<endl;
@@ -52,6 +56,8 @@ void displayStudentPrompts(){
     cout<<"7) To view current borrows enter 7"<<endl;
     cout<<"8) To view your profile enter 8"<<endl;
     cout<<"9) Enter 0 to exit"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<endl;
 }
 void processStudentRequest(User* user,int op,Library& lib){
@@ -110,7 +116,10 @@ void processStudentRequest(User* user,int op,Library& lib){
 }
 void displayFacultyPrompts(){
     cout<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<"What do you want to do ?"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<endl;
     cout<<"1) To borrow a book enter 1"<<endl;
     cout<<"2) To return a book enter 2"<<endl;
@@ -119,6 +128,8 @@ void displayFacultyPrompts(){
     cout<<"5) To view current borrows enter 5"<<endl;
     cout<<"6) To view your profile enter 6"<<endl;
     cout<<"7) Enter 0 to exit"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<endl;
 }
 void processFacultyRequest(User* user,int op,Library& lib){
@@ -167,7 +178,10 @@ void processFacultyRequest(User* user,int op,Library& lib){
 }
 void displayLibrarianPrompts(){
     cout<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<"What do you want to do ?"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<endl;
     cout<<"1) To add a user enter 1"<<endl;
     cout<<"2) To delete a user enter 2"<<endl;
@@ -178,6 +192,8 @@ void displayLibrarianPrompts(){
     cout<<"7) To view all users enter 7"<<endl;
     cout<<"8) To view your profile enter 8"<<endl;
     cout<<"9) To exit enter 0"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"-------------------------------"<<endl;
     cout<<endl;
 }
 void processLibrarianRequest(User* user,int op,Library& lib){

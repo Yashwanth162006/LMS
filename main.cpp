@@ -10,11 +10,15 @@
 using namespace std;
 
 int main(){
+    cout<<"-------------------------------"<<endl;
     cout<<"Welcome To Yashwanth RJ Library"<<endl;
+    cout<<"-------------------------------"<<endl;
     Library lib;
     bool isLibOpen = openLibrary(lib);
     if(isLibOpen){
         cout<<"Library Loaded Successfully"<<endl;
+        cout<<endl;
+        cout<<"-------------------------------"<<endl;
     }
     string userIn;
     while(1){
