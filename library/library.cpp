@@ -188,6 +188,7 @@ Book* Library::identifyBook(string ISBN){
 }
 //Loading Data
 bool Library::loadUsers(){
+    users.clear();
     ifstream readUsers("./data/users.csv");
     if(!readUsers.is_open()) return false;
     string name,phoneNumber,userName,password,role,isLoggedIn,fine;
@@ -210,6 +211,7 @@ bool Library::loadUsers(){
     return true;
 }
 bool Library::loadBooks(){
+    books.clear();
     ifstream readBooks("./data/books.csv");
     if(!readBooks.is_open()) return false;
     string title,author,publisher,ISBN,status;
@@ -229,6 +231,7 @@ bool Library::loadBooks(){
     return true;
 }
 bool Library::loadTransactions(){
+    history.clear();
     ifstream readHistory("./data/transactions.csv");
     if(!readHistory.is_open()) return false;
     string userName,ISBN,action,date;
@@ -330,11 +333,12 @@ bool Library::updateFine(string userName, int newAmount) {
             userFound = true;
             break;
         }
-    }    
+    }
+    cout<<"Updating Fine"<<endl;
     if (!userFound) {
         return false;
     }
-    std::ofstream file("users.csv");
+    std::ofstream file("./data/users.csv");
     if (!file.is_open()) {
         return false;
     }

@@ -11,19 +11,24 @@
 using namespace std;
 
 //helper functions
-list<pair<string,long long>> filterHistory(list<list<string>>& transactionHistory,string userName){
+list<pair<string,long long>> filterHistory(list<list<string>>& transactionHistory, string userName) {
     list<pair<string,long long>> borrows;
-    for(auto it=transactionHistory.begin();it!=transactionHistory.end();it++){
+    for (auto it = transactionHistory.begin(); it != transactionHistory.end(); it++) {
         auto nameIt = it->begin();
-        nameIt++;nameIt++;
-        if(*(nameIt)=="Borrowed"){
+        nameIt++; nameIt++;
+        if (*(nameIt) == "Borrowed") {
             nameIt--;
-            auto date = it->end();date--;
-            borrows.push_back({*(nameIt),stoll(*(date))});
-        }else{
+            auto date = it->end(); date--;
+            borrows.push_back({*(nameIt), stoll(*(date))});
+        } else {
             nameIt--;
-            for(auto it1=borrows.begin();it1!=borrows.end();it1++){
-                if((*it1).first == *(nameIt)) borrows.remove({(*it1).first,(*it1).second});
+            // Safely remove elements using iterator-based erase.
+            for (auto it1 = borrows.begin(); it1 != borrows.end(); ) {
+                if (it1->first == *(nameIt)) {
+                    it1 = borrows.erase(it1);
+                } else {
+                    ++it1;
+                }
             }
         }
     }
@@ -66,7 +71,9 @@ Account::Account(string userName,string role){
     bool isHistoryLoaded = lib1.loadTransactions();
     if(isHistoryLoaded) transactionHistory = lib1.getHistory(userName);
     //current borrows
+    //Error//
     currBorrows = filterHistory(transactionHistory,userName);
+    //Error//
     //total fine
     if(role=="Faculty" || role=="Librarian") totalFine=0;
     else totalFine = calculateFine(currBorrows)+lib1.getFine(userName);
@@ -101,27 +108,53 @@ bool Account::addBook(string bookId){
             cout<<"You have reached the maximum limit"<<endl;
             return false;
         }else{
-            return true;
+            Library lib;
+            lib.loadBooks();
+            Book* book = lib.identifyBook(bookId);
+            book->updateStatus("Unavailable");
+            list<string> transaction;
+            transaction.push_back(userName);transaction.push_back(bookId);
+            transaction.push_back("Borrowed");transaction.push_back(to_string(getCurrentTimeInMilliseconds()));
+            currBorrows.push_back({bookId,getCurrentTimeInMilliseconds()});
+            transactionHistory.push_back(transaction);
+            return lib.addTransaction(transaction);
         }
     }
     return false;
 }
 bool Account::removeBook(string bookId){
-    if(role=="Student"){
-        return true;
-    }else if(role=="Faculty"){
-        return true;
+    auto it_book=currBorrows.end();
+    for(auto it=currBorrows.begin();it!=currBorrows.end();it++){
+        if((*it).first==bookId) it_book = it;
     }
-    return false;
+    if(it_book == currBorrows.end()){
+        cout<<"You Did Not Borrow The Book"<<endl;
+        return false;
+    }
+    long long date_borrowed = (*it_book).second;
+    currBorrows.erase(it_book);
+
+    Library lib;
+    lib.loadBooks();
+    Book* book = lib.identifyBook(bookId);
+    book->updateStatus("Available");
+    list<string> transaction;
+    transaction.push_back(userName);transaction.push_back(bookId);
+    transaction.push_back("Retured");transaction.push_back(to_string(getCurrentTimeInMilliseconds()));
+    transactionHistory.push_back(transaction);
+    return lib.addTransaction(transaction);
 }
 void Account::checkFine(){
     cout<<"Your Total Fine is: "<<totalFine<<endl;
 }
 bool Account::payFine(int amount){
-    if(amount>=totalFine){
+    if(amount>totalFine){
         return false;
     }else{
         totalFine -= amount;
+        Library lib;
+        lib.loadUsers();
+        lib.updateFine(userName,amount);
         return true;
     }
 }

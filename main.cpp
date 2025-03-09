@@ -22,6 +22,7 @@ int main(){
         cin>>userIn;
         if(userIn=="close") break;
         User* user = lib.identifyUser(userIn);
+    
         if(user==nullptr){
             cout<<"User Not Found"<<endl;
         }else{

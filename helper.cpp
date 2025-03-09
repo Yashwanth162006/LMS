@@ -68,6 +68,8 @@ void processStudentRequest(User* user,int op,Library& lib){
             else cout<<"Error: failed to borrow"<<endl;
         }
         else cout<<"Book is unavailable"<<endl;
+        lib.loadBooks();
+        lib.loadTransactions();
     }else if(op==2){
         string bookId;
         cout<<"Enter ISBN number: ";
@@ -78,6 +80,8 @@ void processStudentRequest(User* user,int op,Library& lib){
         bool returnResult = user->returnBook(bookId);
         if(returnResult) cout<<"Returned Succesfully"<<endl;
         else cout<<"Error: Returning the book"<<endl;
+        lib.loadBooks();
+        lib.loadTransactions();
     }else if(op==3){
         string bookId;
         cout<<"Enter ISBN number: ";
@@ -131,6 +135,8 @@ void processFacultyRequest(User* user,int op,Library& lib){
             else cout<<"Error: failed to borrow"<<endl;
         }
         else cout<<"Book is unavailable"<<endl;
+        lib.loadBooks();
+        lib.loadTransactions();
     }else if(op==2){
         string bookId;
         cout<<"Enter ISBN number: ";
@@ -141,6 +147,8 @@ void processFacultyRequest(User* user,int op,Library& lib){
         bool returnResult = user->returnBook(bookId);
         if(returnResult) cout<<"Returned Succesfully"<<endl;
         else cout<<"Error: Returning the book"<<endl;
+        lib.loadBooks();
+        lib.loadTransactions();
     }else if(op==3){
         string bookId;
         cout<<"Enter ISBN number: ";
@@ -166,8 +174,10 @@ void displayLibrarianPrompts(){
     cout<<"3) To add a book enter 3"<<endl;
     cout<<"4) To delete a book enter 4"<<endl;
     cout<<"5) To view history enter 5"<<endl;
-    cout<<"6) To view your profile enter 6"<<endl;
-    cout<<"7) Enter 0 to exit"<<endl;
+    cout<<"6) To view all books enter 6"<<endl;
+    cout<<"7) To view all users enter 7"<<endl;
+    cout<<"8) To view your profile enter 8"<<endl;
+    cout<<"9) To exit enter 0"<<endl;
     cout<<endl;
 }
 void processLibrarianRequest(User* user,int op,Library& lib){
@@ -272,6 +282,11 @@ void processLibrarianRequest(User* user,int op,Library& lib){
     }else if(op==5){
         user->viewHistory();
     }else if(op==6){
+        lib.displayBooks();
+    }else if(op==7){
+        lib.displayUsers();
+    }
+    else if(op==8){
         user->displayDetails();
     }
 }
