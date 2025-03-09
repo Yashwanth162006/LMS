@@ -45,28 +45,49 @@ void displayStudentPrompts(){
     cout<<endl;
     cout<<"1) To borrow a book enter 1"<<endl;
     cout<<"2) To return a book enter 2"<<endl;
-    cout<<"3) To view fine enter 3"<<endl;
-    cout<<"4) To pay fine enter 4"<<endl;
-    cout<<"5) To view history enter 5"<<endl;
-    cout<<"6) To view current borrows enter 6"<<endl;
-    cout<<"7) To view your profile enter 7"<<endl;
-    cout<<"8) Enter 0 to exit"<<endl;
+    cout<<"3) To enquire about a book enter 3"<<endl;
+    cout<<"4) To view fine enter 3"<<endl;
+    cout<<"5) To pay fine enter 4"<<endl;
+    cout<<"6) To view history enter 5"<<endl;
+    cout<<"7) To view current borrows enter 6"<<endl;
+    cout<<"8) To view your profile enter 7"<<endl;
+    cout<<"9) Enter 0 to exit"<<endl;
     cout<<endl;
 }
-void processStudentRequest(User* user,int op){
+void processStudentRequest(User* user,int op,Library& lib){
     if(op==1){
         string bookId;
         cout<<"Enter ISBN number: ";
         cin>>bookId;
-        bool borrowResult = user->borrowBook(bookId);
+        lib.loadBooks();
+        Book* book = lib.identifyBook(bookId);
+        if(book == nullptr) cout<<"Invalid ISBN number"<<endl;
+        else if(book->checkAvailability()){
+            bool borrowResult = user->borrowBook(bookId);
+            if(borrowResult) cout<<"Scuccessfully borrowed"<<endl;
+            else cout<<"Error: failed to borrow"<<endl;
+        }
+        else cout<<"Book is unavailable"<<endl;
     }else if(op==2){
         string bookId;
         cout<<"Enter ISBN number: ";
         cin>>bookId;
+        lib.loadBooks();
+        Book* book = lib.identifyBook(bookId);
+        if(book==nullptr) cout<<"Invalid ISBN number"<<endl;
         bool returnResult = user->returnBook(bookId);
+        if(returnResult) cout<<"Returned Succesfully"<<endl;
+        else cout<<"Error: Returning the book"<<endl;
     }else if(op==3){
-        user->checkFineDetails();
+        string bookId;
+        cout<<"Enter ISBN number: ";
+        cin>>bookId;
+        Book* book = lib.identifyBook(bookId);
+        if(book == nullptr) cout<<"Invalid ISBN number"<<endl;
+        else book->getDetails();
     }else if(op==4){
+        user->checkFineDetails();
+    }else if(op==5){
         int amount=0;
         user->checkFineDetails();
         cout<<"Enter valid amount: ";cin>>amount;
@@ -74,11 +95,11 @@ void processStudentRequest(User* user,int op){
         else cout<<"Entered amount is more that your total fine try again"<<endl;
         user->checkFineDetails();
     }
-    else if(op==5){
+    else if(op==6){
         user->viewTransactionHistory();
-    }else if(op==6){
-        user->viewCurrentBorrows();
     }else if(op==7){
+        user->viewCurrentBorrows();
+    }else if(op==8){
         user->displayDetails();
     }
 }
@@ -89,27 +110,49 @@ void displayFacultyPrompts(){
     cout<<"1) To borrow a book enter 1"<<endl;
     cout<<"2) To return a book enter 2"<<endl;
     cout<<"3) To view history enter 3"<<endl;
-    cout<<"4) To view current borrows enter 4"<<endl;
-    cout<<"5) To view your profile enter 5"<<endl;
-    cout<<"6) Enter 0 to exit"<<endl;
+    cout<<"4) To enquire about a book enter 4"<<endl;
+    cout<<"5) To view current borrows enter 5"<<endl;
+    cout<<"6) To view your profile enter 6"<<endl;
+    cout<<"7) Enter 0 to exit"<<endl;
     cout<<endl;
 }
-void processFacultyRequest(User* user,int op){
+void processFacultyRequest(User* user,int op,Library& lib){
     if(op==1){
         string bookId;
         cout<<"Enter ISBN number: ";
         cin>>bookId;
-        bool borrowResult = user->borrowBook(bookId);
+        lib.loadBooks();
+        Book* book = lib.identifyBook(bookId);
+        if(book == nullptr) cout<<"Invalid ISBN number"<<endl;
+        else if(book->checkAvailability()){
+            bool borrowResult = user->borrowBook(bookId);
+            if(borrowResult) cout<<"Scuccessfully borrowed"<<endl;
+            else cout<<"Error: failed to borrow"<<endl;
+        }
+        else cout<<"Book is unavailable"<<endl;
     }else if(op==2){
         string bookId;
         cout<<"Enter ISBN number: ";
         cin>>bookId;
+        lib.loadBooks();
+        Book* book = lib.identifyBook(bookId);
+        if(book==nullptr) cout<<"Invalid ISBN number"<<endl;
         bool returnResult = user->returnBook(bookId);
+        if(returnResult) cout<<"Returned Succesfully"<<endl;
+        else cout<<"Error: Returning the book"<<endl;
     }else if(op==3){
+        string bookId;
+        cout<<"Enter ISBN number: ";
+        cin>>bookId;
+        Book* book = lib.identifyBook(bookId);
+        if(book == nullptr) cout<<"Invalid ISBN number"<<endl;
+        else book->getDetails();
+    }
+    else if(op==4){
         user->viewTransactionHistory();
-    }else if(op==4){
-        user->viewCurrentBorrows();
     }else if(op==5){
+        user->viewCurrentBorrows();
+    }else if(op==6){
         user->displayDetails();
     }
 }

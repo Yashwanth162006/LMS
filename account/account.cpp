@@ -77,10 +77,43 @@ list<pair<string,long long>> Account::getCurrBorrows(){
 }
 //member functions
 bool Account::addBook(string bookId){
-    return true;
+    if(role=="Student"){
+        if(totalFine>0){
+            cout<<"Clear the pending fine to borrow"<<endl;
+            return false;
+        }else if(currBorrows.size()==3){
+            cout<<"You have reached the maximum limit"<<endl;
+            return false;
+        }else{
+            Library lib;
+            lib.loadBooks();
+            Book* book = lib.identifyBook(bookId);
+            book->updateStatus("Unavailable");
+            lib.updateBookStatus(bookId,"Unavailable");
+            list<string> transaction;
+            transaction.push_back(userName);transaction.push_back(bookId);
+            transaction.push_back("Borrowed");transaction.push_back(to_string(getCurrentTimeInMilliseconds()));
+            currBorrows.push_back({bookId,getCurrentTimeInMilliseconds()});
+            transactionHistory.push_back(transaction);
+            return lib.addTransaction(transaction);
+        }
+    }else if(role=="Faculty"){
+        if(currBorrows.size()==5){
+            cout<<"You have reached the maximum limit"<<endl;
+            return false;
+        }else{
+            return true;
+        }
+    }
+    return false;
 }
 bool Account::removeBook(string bookId){
-    return true;
+    if(role=="Student"){
+        return true;
+    }else if(role=="Faculty"){
+        return true;
+    }
+    return false;
 }
 void Account::checkFine(){
     cout<<"Your Total Fine is: "<<totalFine<<endl;

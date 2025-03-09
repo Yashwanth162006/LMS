@@ -43,7 +43,7 @@ public:
     void displayBooks();
     Book* identifyBook(string ISBN);
     //history
-    bool addTransaction();
+    bool addTransaction(list<string> transaction);
     bool loadTransactions();
     void displayHistory();
 };

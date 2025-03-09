@@ -39,7 +39,7 @@ int main(){
                     cout<<"Enter Option: ";
                     cin>>op;
                     if(op==0) break;
-                    processStudentRequest(user,op);
+                    processStudentRequest(user,op,lib);
                 }
             }else if(user->getRole()=="Faculty"){
                 displayFacultyPrompts();
@@ -47,7 +47,7 @@ int main(){
                     cout<<"Enter Option: ";
                     cin>>op;
                     if(op==0) break;
-                    processFacultyRequest(user,op);
+                    processFacultyRequest(user,op,lib);
                 }
             }else if(user->getRole()=="Librarian"){
                 displayLibrarianPrompts();

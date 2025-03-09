@@ -55,7 +55,51 @@ bool Library::addBook(string title,string author,string publisher,string ISBN,st
 bool Library::deleteBook(string ISBN){
     return true;
 }
-bool Library::addTransaction(){
+bool Library::addTransaction(std::list<std::string> transaction) {
+    // Add the new transaction to the history
+    history.push_back(transaction);
+    
+    // Check if a newline is needed by reading the last character of the file.
+    bool needsNewline = false;
+    {
+        std::ifstream inFile("transactions.csv", std::ios::ate | std::ios::binary);
+        if (inFile) {
+            std::streampos size = inFile.tellg();
+            if (size > 0) {
+                inFile.seekg(-1, std::ios::end);
+                char lastChar;
+                inFile.get(lastChar);
+                if (lastChar != '\n') {
+                    needsNewline = true;
+                }
+            }
+        }
+    }
+    
+    // Open the file in append mode
+    std::ofstream outFile("transactions.csv", std::ios::out | std::ios::app);
+    if (!outFile.is_open()) {
+        std::cerr << "Failed to open transactions.csv for appending." << std::endl;
+        return false;
+    }
+    
+    // If the last line doesn't end with a newline, add one.
+    if (needsNewline) {
+        outFile << "\n";
+    }
+    
+    // Write the new transaction as a CSV line.
+    bool firstItem = true;
+    for (const auto& item : transaction) {
+        if (!firstItem) {
+            outFile << ",";
+        }
+        outFile << item;
+        firstItem = false;
+    }
+    outFile << "\n"; // End the transaction with a newline.
+    
+    outFile.close();
     return true;
 }
 User* Library::identifyUser(string userName){

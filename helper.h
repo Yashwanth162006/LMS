@@ -17,7 +17,7 @@ void authenticate(User* user,string& userIn);
 void displayStudentPrompts();
 void displayFacultyPrompts();
 void displayLibrarianPrompts();
-void processStudentRequest(User* user,int op);
-void processFacultyRequest(User* user,int op);
+void processStudentRequest(User* user,int op,Library& lib);
+void processFacultyRequest(User* user,int op,Library& lib);
 void processLibrarianRequest(User* user,int op,Library& lib);
 #endif
