@@ -46,11 +46,11 @@ void displayStudentPrompts(){
     cout<<"1) To borrow a book enter 1"<<endl;
     cout<<"2) To return a book enter 2"<<endl;
     cout<<"3) To enquire about a book enter 3"<<endl;
-    cout<<"4) To view fine enter 3"<<endl;
-    cout<<"5) To pay fine enter 4"<<endl;
-    cout<<"6) To view history enter 5"<<endl;
-    cout<<"7) To view current borrows enter 6"<<endl;
-    cout<<"8) To view your profile enter 7"<<endl;
+    cout<<"4) To view fine enter 4"<<endl;
+    cout<<"5) To pay fine enter 5"<<endl;
+    cout<<"6) To view history enter 6"<<endl;
+    cout<<"7) To view current borrows enter 7"<<endl;
+    cout<<"8) To view your profile enter 8"<<endl;
     cout<<"9) Enter 0 to exit"<<endl;
     cout<<endl;
 }
@@ -82,6 +82,7 @@ void processStudentRequest(User* user,int op,Library& lib){
         string bookId;
         cout<<"Enter ISBN number: ";
         cin>>bookId;
+        lib.loadBooks();
         Book* book = lib.identifyBook(bookId);
         if(book == nullptr) cout<<"Invalid ISBN number"<<endl;
         else book->getDetails();
@@ -109,8 +110,8 @@ void displayFacultyPrompts(){
     cout<<endl;
     cout<<"1) To borrow a book enter 1"<<endl;
     cout<<"2) To return a book enter 2"<<endl;
-    cout<<"3) To view history enter 3"<<endl;
-    cout<<"4) To enquire about a book enter 4"<<endl;
+    cout<<"3) To enquire about a book enter 3"<<endl;
+    cout<<"4) To view history enter 4"<<endl;
     cout<<"5) To view current borrows enter 5"<<endl;
     cout<<"6) To view your profile enter 6"<<endl;
     cout<<"7) Enter 0 to exit"<<endl;

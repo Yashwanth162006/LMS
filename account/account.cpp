@@ -89,7 +89,6 @@ bool Account::addBook(string bookId){
             lib.loadBooks();
             Book* book = lib.identifyBook(bookId);
             book->updateStatus("Unavailable");
-            lib.updateBookStatus(bookId,"Unavailable");
             list<string> transaction;
             transaction.push_back(userName);transaction.push_back(bookId);
             transaction.push_back("Borrowed");transaction.push_back(to_string(getCurrentTimeInMilliseconds()));

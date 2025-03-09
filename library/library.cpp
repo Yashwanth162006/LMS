@@ -44,64 +44,117 @@ list<list<string>> Library::getHistory(string userName){
 }
 //member functions
 bool Library::addUser(string name,string phoneNumber,string userName,string password,string role){
+    list<string> newUser = {name, phoneNumber, userName, password, role, "No","0"};
+    users.push_back(newUser);
+    std::ofstream file("./data/users.csv", std::ios::app);
+    if (!file.is_open()) {
+        return false;
+    }
+    file << name << "," << phoneNumber << "," << userName << "," << password << "," << role << "," << "No" << "," << "0" <<"\n";
+    file.close();
     return true;
 }
-bool Library::deleteUser(string userName){
+bool Library::deleteUser(string userName) {
+    bool userFound = false;
+    for (auto it = users.begin(); it != users.end(); ) {
+        if (it->size() >= 3) {
+            auto field = it->begin();
+            std::advance(field, 2);
+            if (*field == userName) {
+                it = users.erase(it);
+                userFound = true;
+                continue;
+            }
+        }
+        ++it;
+    }
+    if (!userFound) {
+        return false;
+    }
+    std::ofstream file("./data/users.csv");
+    if (!file.is_open()) {
+        return false;
+    }    
+    for (const auto& user : users) {
+        bool firstField = true;
+        for (const auto& field : user) {
+            if (!firstField) {
+                file << ",";
+            }
+            file << field;
+            firstField = false;
+        }
+        file << "\n";
+    }
+    file.close();
     return true;
 }
-bool Library::addBook(string title,string author,string publisher,string ISBN,string status){
+bool Library::addBook(string title, string author, string publisher, string ISBN, string status) {
+    list<string> newBook = {title, author, publisher, ISBN, status};
+    books.push_back(newBook);
+    std::ofstream file("./data/books.csv", std::ios::app);
+    if (!file.is_open()) {
+        return false;
+    }
+    file << title << "," << author << "," << publisher << "," << ISBN << "," << status << "\n";
+    file.close();
+    
     return true;
 }
 bool Library::deleteBook(string ISBN){
+    bool bookFound = false;
+    for (auto it = books.begin(); it != books.end(); ) {
+        if (it->size() >= 4) {
+            auto field = it->begin();
+            std::advance(field, 3);
+            if (*field == ISBN) {
+                it = books.erase(it);
+                bookFound = true;
+                continue;
+            }
+        }
+        ++it;
+    }
+    if (!bookFound) {
+        return false;
+    }
+    std::ofstream file("./data/books.csv");
+    if (!file.is_open()) {
+        return false;
+    }    
+    for (const auto& book : books) {
+        bool firstField = true;
+        for (const auto& field : book) {
+            if (!firstField) {
+                file << ",";
+            }
+            file << field;
+            firstField = false;
+        }
+        file << "\n";
+    }
+    file.close();
     return true;
 }
 bool Library::addTransaction(std::list<std::string> transaction) {
-    // Add the new transaction to the history
     history.push_back(transaction);
-    
-    // Check if a newline is needed by reading the last character of the file.
-    bool needsNewline = false;
-    {
-        std::ifstream inFile("transactions.csv", std::ios::ate | std::ios::binary);
-        if (inFile) {
-            std::streampos size = inFile.tellg();
-            if (size > 0) {
-                inFile.seekg(-1, std::ios::end);
-                char lastChar;
-                inFile.get(lastChar);
-                if (lastChar != '\n') {
-                    needsNewline = true;
-                }
-            }
-        }
-    }
-    
-    // Open the file in append mode
-    std::ofstream outFile("transactions.csv", std::ios::out | std::ios::app);
-    if (!outFile.is_open()) {
-        std::cerr << "Failed to open transactions.csv for appending." << std::endl;
+    std::ofstream file("./data/transactions.csv", std::ios::app);
+    if (!file.is_open()) {
         return false;
     }
-    
-    // If the last line doesn't end with a newline, add one.
-    if (needsNewline) {
-        outFile << "\n";
-    }
-    
-    // Write the new transaction as a CSV line.
-    bool firstItem = true;
-    for (const auto& item : transaction) {
-        if (!firstItem) {
-            outFile << ",";
+    bool firstField = true;
+    for (const auto& field : transaction) {
+        if (!firstField) {
+            file << ",";
         }
-        outFile << item;
-        firstItem = false;
+        file << field;
+        firstField = false;
     }
-    outFile << "\n"; // End the transaction with a newline.
-    
-    outFile.close();
+    file << "\n";
+    file.close();
     return true;
 }
+
 User* Library::identifyUser(string userName){
     vector<string> userDetails;
     for(auto it=users.begin();it!=users.end();it++){
@@ -217,17 +270,41 @@ void Library::displayHistory(){
         cout<<endl;
     }
 }
-bool Library::updateBookStatus(string bookId,string newStatus){
-    for(auto it=books.begin();it!=books.end();it++){
-        auto isbnIt = it->begin();
-        isbnIt++,isbnIt++,isbnIt++;
-        if(*isbnIt == bookId){
-            isbnIt++;
-            *isbnIt = newStatus;
-            return true;
+bool Library::updateBookStatus(string bookId, string newStatus) {
+    bool bookFound = false;
+    for (auto it = books.begin(); it != books.end(); ++it) {
+        if (it->size() < 5) continue;
+        auto fieldIt = it->begin();
+        std::advance(fieldIt, 3);
+        if (*fieldIt == bookId) {
+            auto statusIt = it->end();
+            --statusIt;
+            *statusIt = newStatus;
+            bookFound = true;
+            break;
         }
     }
-    return false;
+    if (!bookFound) {
+        return false;
+    }
+    std::ofstream file("./data/books.csv");
+    if (!file.is_open()) {
+        return false;
+    }
+    for (const auto& book : books) {
+        bool firstField = true;
+        for (const auto& field : book) {
+            if (!firstField) {
+                file << ",";
+            }
+            file << field;
+            firstField = false;
+        }
+        file << "\n";
+    }
+    
+    file.close();
+    return true;
 }
 int Library::getFine(string userName){
     for(auto it=users.begin();it!=users.end();it++){
@@ -241,17 +318,37 @@ int Library::getFine(string userName){
     }
     return 0;
 }
-bool Library::updateFine(string userName,int newAmount){
-    for(auto it=users.begin();it!=users.end();it++){
+bool Library::updateFine(string userName, int newAmount) {
+    bool userFound = false;
+    for (auto it = users.begin(); it != users.end(); ++it) {
         auto innerIt = it->begin();
-        innerIt++;innerIt++;
-        if(*innerIt == userName){
-            innerIt = it->end();
-            innerIt--;
-            *innerIt = to_string(stoi(*innerIt)-newAmount);
-            //*****update user.csv file*****//
-            return true; 
+        std::advance(innerIt, 2);
+        if (*innerIt == userName) {
+            auto lastIt = it->end();
+            --lastIt;
+            *lastIt = to_string(stoi(*lastIt) - newAmount);
+            userFound = true;
+            break;
         }
+    }    
+    if (!userFound) {
+        return false;
     }
-    return false;
+    std::ofstream file("users.csv");
+    if (!file.is_open()) {
+        return false;
+    }
+    for (const auto& user : users) {
+        bool firstField = true;
+        for (const auto& field : user) {
+            if (!firstField) {
+                file << ",";
+            }
+            file << field;
+            firstField = false;
+        }
+        file << "\n";
+    }
+    file.close();
+    return true;
 }
